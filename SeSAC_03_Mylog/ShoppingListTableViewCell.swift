@@ -1,5 +1,5 @@
 //
-//  MovieTableViewCell.swift
+//  ShoppingListTableViewCell.swift
 //  SeSAC_03_Mylog
 //
 //  Created by mac on 2021/10/13.
@@ -7,18 +7,13 @@
 
 import UIKit
 
-class MovieTableViewCell: UITableViewCell {
-    
-    static let identifier = "MovieTableViewCell"
+class ShoppingListTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var posterImageView: UIImageView!
+    @IBOutlet weak var dataLabel: UILabel!
     
-    @IBOutlet weak var titleLable: UILabel!
+    @IBOutlet weak var checkboxBtn: UIButton!
     
-    @IBOutlet weak var releaseDateLabel: UILabel!
-    
-    @IBOutlet weak var overviewLabel: UILabel!
-    
+    @IBOutlet weak var bookmarkBtn: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()

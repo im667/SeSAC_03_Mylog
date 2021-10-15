@@ -9,32 +9,90 @@ import UIKit
 
 class MemoTableViewController: UITableViewController {
     
-    var list:[String] = ["장 보기","메모 확인하기","영화보러가기","WWDC시청하기"]{
+    
+    var list = [Memo]() {
         didSet{
-            tableView.reloadData()
+           saveData()
         }
     }
 
     @IBOutlet weak var memoTextView: UITextView!
     
+    @IBOutlet weak var categorySegmentedControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(closeButtonClicked))
+        
+        //셀 자동 높이 계산 UITableView.automaticDimension
+        
+        
+        loadData()
       }
+    
+    @objc func closeButtonClicked(){
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     
     @IBAction func saveBtn(_ sender: UIButton) {
         //배열에 텍스트뷰의 텍스트 값 추가
         if let text = memoTextView.text{
-            list.append(text)
+            
+            let segmentIndex = categorySegmentedControl.selectedSegmentIndex
+            
+            let segmentCategory = Category(rawValue: segmentIndex) ?? .others
+            
+            let memo = Memo(content: text, category: segmentCategory)
+            
+            list.append(memo)
 //            tableView.reloadData()
-            print(list)
+ 
         } else {
-            print("")
+            print("ERROR")
         }
         
     }
+    func loadData(){
+        let userDefaults = UserDefaults.standard
+        
+        if let data = userDefaults.object(forKey: "memoList") as? [[String:Any]]{
+            
+            var memo = [Memo]()
+            
+            for datum in data {
+                
+                guard let category = datum["category"] as? Int else {return}
+                guard let content = datum["content"] as? String else {return}
+                
+                let enumCategoty = Category(rawValue: category) ?? .others
+                
+                memo.append(Memo(content: content, category: enumCategoty))
+            }
+            
+            self.list = memo
+        }
+    }
     
+    
+    func saveData(){
+        var memo:[[String:Any]] = []
+      
+        for i in list {
+            let data: [String:Any] = [
+                "category": i.category.rawValue,
+                "content": i.content
+            ]
+            memo.append(data)
+        }
+        
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(memo, forKey: "memoList")
+        
+        tableView.reloadData()
+    }
     
     //옵션: 섹션의 수: numberOfSections
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -75,10 +133,24 @@ class MemoTableViewController: UITableViewController {
             cell.textLabel?.text = " 첫번째 섹션 입니다. - \(indexPath)"
             cell.textLabel?.textColor = .brown
             cell.textLabel?.font = .boldSystemFont(ofSize: 15)
+            cell.imageView?.image = nil
+            cell.detailTextLabel?.text = nil
         } else {
-            cell.textLabel?.text = list[indexPath.row]
+            
+            let row = list[indexPath.row]
+            
+            cell.textLabel?.text = row.content
+            cell.detailTextLabel?.text = row.category.description
             cell.textLabel?.textColor = .blue
             cell.textLabel?.font = .italicSystemFont(ofSize: 13)
+       
+            switch row.category {
+            case .business: cell.imageView?.image = UIImage(systemName: "building.2")
+            case .personal: cell.imageView?.image = UIImage(systemName: "person")
+            case .others: cell.imageView?.image = UIImage(systemName: "square.and.pencil")
+            }
+            
+            cell.imageView?.tintColor = .red
         }
         
         return cell
