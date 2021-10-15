@@ -25,6 +25,7 @@
 		04867F9D27190EFE003199F6 /* MovieStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04867F9C27190EFE003199F6 /* MovieStoryboard.storyboard */; };
 		04867FA127191026003199F6 /* MyMovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04867FA027191026003199F6 /* MyMovieViewController.swift */; };
 		04867FA3271918C6003199F6 /* MovieCastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04867FA2271918C6003199F6 /* MovieCastViewController.swift */; };
+		04867FA52719FAB8003199F6 /* ShoppingListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04867FA42719FAB8003199F6 /* ShoppingListData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		04867F9C27190EFE003199F6 /* MovieStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MovieStoryboard.storyboard; sourceTree = "<group>"; };
 		04867FA027191026003199F6 /* MyMovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMovieViewController.swift; sourceTree = "<group>"; };
 		04867FA2271918C6003199F6 /* MovieCastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCastViewController.swift; sourceTree = "<group>"; };
+		04867FA42719FAB8003199F6 /* ShoppingListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 				04867F902717AEEB003199F6 /* MovieInfomation.swift */,
 				047E536A271516AC00F01737 /* MemoTableViewController.swift */,
 				04867F922717B59A003199F6 /* Memo.swift */,
+				04867FA42719FAB8003199F6 /* ShoppingListData.swift */,
 				047E535F27150A9100F01737 /* Assets.xcassets */,
 				047E536127150A9100F01737 /* LaunchScreen.storyboard */,
 				047E536427150A9100F01737 /* Info.plist */,
@@ -184,6 +187,7 @@
 				04867F8D2716D119003199F6 /* ShoppingListTableViewController.swift in Sources */,
 				04867F932717B59A003199F6 /* Memo.swift in Sources */,
 				04867FA3271918C6003199F6 /* MovieCastViewController.swift in Sources */,
+				04867FA52719FAB8003199F6 /* ShoppingListData.swift in Sources */,
 				04867F8B2716D0C1003199F6 /* ShoppingListTableViewCell.swift in Sources */,
 				047E536B271516AC00F01737 /* MemoTableViewController.swift in Sources */,
 				04867F952717D2DF003199F6 /* ViewController+Ex.swift in Sources */,

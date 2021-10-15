@@ -7,10 +7,16 @@
 
 import UIKit
 
-var dataArry: [String] = ["test","test2","test3","test4"]
+
 
 class ShoppingListTableViewController: UITableViewController {
 
+    var dataArry: [shoppingList] = []{
+        didSet{
+            saveData()
+        }
+    }
+    
     @IBOutlet weak var IsUserInputTf: UITextField!
     
     
@@ -24,6 +30,38 @@ class ShoppingListTableViewController: UITableViewController {
         self.IsUserInputTf.placeholder = "무엇을 구매하실 건가요?"
     }
 
+    func loadData(){
+        let userD = UserDefaults.standard
+        
+        var shopdata = [shoppingList]()
+        
+        if let data = userD.object(forKey: "shopListCell") as? [[String:Any]]{
+            for datum in data {
+                guard let content = datum["checkList"] as? String else {return}
+                shopdata.append(shoppingList(checkList: content))
+            }
+        }
+    }
+   
+    
+    
+    func saveData(){
+        var shopdata:[[String:Any]] = []
+      
+        
+        for i in dataArry {
+            let data: [String:Any] = [
+                "checkList":i.checkList
+            ]
+            shopdata.append(data)
+    }
+        let userD = UserDefaults.standard
+        userD.set(shopdata, forKey: "shopListCell")
+        
+        tableView.reloadData()
+    
+    }
+    
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -45,7 +83,7 @@ class ShoppingListTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ShoppingList", for: indexPath) as! ShoppingListTableViewCell
         
-        cell.dataLabel.text = dataArry[indexPath.row]
+        cell.dataLabel.text = dataArry[indexPath.row].checkList
         // Configure the cell...
         cell.selectionStyle = .none
 
@@ -58,19 +96,21 @@ class ShoppingListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            dataArry.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
             
-        } else if editingStyle == .insert {
+            if indexPath.section == 0 {
+                if editingStyle == .delete {
+                    dataArry.remove(at: indexPath.row)
+                    tableView.reloadData()
+                }
+            }
         }
-    }
-    
     @IBAction func AddCellBtn(_ sender: UIButton) {
-        if IsUserInputTf.text != nil {
-           
-            dataArry.append("\(IsUserInputTf.text!)")
-            tableView.reloadData()
+        
+        if let text = IsUserInputTf.text {
+           let checkList = shoppingList(checkList: text)
+            dataArry.append(checkList)
+        } else {
+            print("ERROR")
         }
     }
     
